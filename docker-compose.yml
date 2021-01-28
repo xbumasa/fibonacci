@@ -1,0 +1,71 @@
+version: "3"
+services:
+  pg:
+    image: postgres:latest
+    environment:
+      - POSTGRES_PASSWORD=postgres_password
+    expose:
+      - 5432
+
+  redis:
+    image: redis:latest
+    expose:
+      - 6379
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile.dev
+    depends_on:
+      - pg
+      - redis
+    volumes:
+      - /var/udemy/api/node_modules
+      - ./api:/var/udemy/api
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - PGHOST=pg
+      - PGPORT=5432
+      - PGDATABASE=postgres
+      - PGUSER=postgres
+      - PGPASSWORD=postgres_password
+    expose:
+      - 5000
+
+  ui:
+    stdin_open: true
+    build:
+      context: ./ui
+      dockerfile: Dockerfile.dev
+    depends_on:
+      - api
+    volumes:
+      - /var/udemy/ui/node_modules
+      - ./ui:/var/udemy/ui
+    expose:
+      - 3000
+
+  worker:
+    build:
+      context: ./worker
+      dockerfile: Dockerfile.dev
+    depends_on:
+      - redis
+    volumes:
+      - /var/udemy/worker/node_modules
+      - ./worker:/var/udemy/worker
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile.dev
+    depends_on:
+      - api
+      - ui
+    restart: always
+    ports:
+      - "3050:80"
