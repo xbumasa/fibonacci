@@ -5,18 +5,21 @@
       "name": "ui",
       "image": "xbumasa/fibonacci-ui",
       "hostname": "ui",
-      "essential": false
+      "essential": false,
+      "memory": 128
     },
     {
       "name": "api",
       "image": "xbumasa/fibonacci-api",
       "hostname": "api",
-      "essential": false
+      "essential": false,
+      "memory": 128
     },
     {
       "name": "worker",
       "image": "xbumasa/fibonacci-worker",
-      "essential": false
+      "essential": false,
+      "memory": 128
     },
     {
       "name": "nginx",
@@ -28,7 +31,8 @@
           "containerPort": 80
         }
       ],
-      "links": ["ui", "api"]
+      "links": ["ui", "api"],
+      "memory": 128
     }
   ]
 }
