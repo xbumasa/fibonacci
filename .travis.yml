@@ -18,3 +18,16 @@ after_success:
   - docker push xbumasa/fibonacci-nginx
   - docker push xbumasa/fibonacci-api
   - docker push xbumasa/fibonacci-worker
+
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-2"
+  app: "fibonacci"
+  env: "Fibonacci-env"
+  bucket_name: "elasticbeanstalk-us-east-2-638825234179"
+  bucket_path: "fibonacci"
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
+
