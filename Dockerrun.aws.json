@@ -2,7 +2,7 @@
   "AWSEBDockerrunVersion": 2,
   "containerDefinitions": [
     {
-      "name": "client",
+      "name": "ui",
       "image": "xbumasa/fibonacci-ui",
       "hostname": "ui",
       "essential": false
