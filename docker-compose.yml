@@ -20,8 +20,8 @@ services:
       - pg
       - redis
     volumes:
-      - /var/udemy/api/node_modules
-      - ./api:/var/udemy/api
+      - /api/node_modules
+      - ./api:/api
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
@@ -41,8 +41,8 @@ services:
     depends_on:
       - api
     volumes:
-      - /var/udemy/ui/node_modules
-      - ./ui:/var/udemy/ui
+      - /ui/node_modules
+      - ./ui:/ui
     expose:
       - 3000
 
@@ -53,8 +53,8 @@ services:
     depends_on:
       - redis
     volumes:
-      - /var/udemy/worker/node_modules
-      - ./worker:/var/udemy/worker
+      - /worker/node_modules
+      - ./worker:/worker
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379

@@ -1,11 +1,11 @@
 FROM node:14.15.4-alpine
 
-WORKDIR /var/udemy/api
+WORKDIR /api
 
 COPY ./package*.json ./
 
 RUN npm install
 
-COPY ./ ./
+COPY . .
 
 CMD ["npm", "run", "start"]
